@@ -32,17 +32,26 @@ import { outbox }   from '../utils/outboxp.mjs';
 import { PubMed }   from '../lib/pubsearch.mjs';
 import   yargs      from 'yargs';
 import { hideBin }  from 'yargs/helpers';
-
+import { Refprint } from '../utils/refprint.mjs';
 
 const pubmed        = new PubMed();
+const output        = new outbox();
+output.outputBox_setup();
 
 function checkOn(payload) {
     if(!payload.status) {
-        console.log(pubmed.activity);
-        console.log(pubmed.errorMessage);
+        const error = `
+        ERROR:
+
+        In <${pubmed.activity}> the following occurred:
+        ${pubmed.errorMessage}
+
+        Returning to system.
+        `;
+        output.outputBox_print(error, 'error');
         process.exit();
     }
-    return payload;
+    return payload.return;
 }
 
 const CLIoptions  = yargs(hideBin(process.argv))
@@ -67,8 +76,6 @@ const CLIoptions  = yargs(hideBin(process.argv))
         })
     .parse();
 
-const output    = new outbox(CLIoptions);
-output.outputBox_setup();
 
 async function main() {
     // Process CLI flags
@@ -78,7 +85,11 @@ async function main() {
     }
 
     const idlist  = checkOn(await pubmed.ids_get(CLIoptions.query));
-    const publist = checkOn(await pubmed.ids_process(idlist.pubmedIDs))
+    const publist = checkOn(await pubmed.ids_process(idlist));
+    if(publist) {
+        const refprint    = new Refprint(publist);
+        refprint.do();
+    }
 }
 
 main();
