@@ -1,0 +1,104 @@
+= pubquery
+
+== abstract
+
+This `nodejs` application returns results from a PubMed query to the console.
+
+== introduction
+
+Generating references is the bedrock of any research endeavour. Usually collecting/finding references is objectively _painful_. This experience is often not helped by the fact that this process is usually limited by the fact that most search engines are web-based. While of course there is nothing wrong with going to a website to type in a query and then copy-pasting the results, this is objectively _inefficient_.
+
+Moreover, in bio/life sciences, the central source is PubMed. To this day, PubMed still does not natively support providing hits in bibTeX format, which necessitates using other third party web sites, compounding the frustration.
+
+This simple application brings sanity to the PubMed search experience by being CLI first and bibTeX native. Simply type in your term in your console and get the results right there. No mess, no fuss.
+
+Pipe to file for kicks.
+
+== how to use
+
+=== prerequisites
+
+You will need a working `node/npm` setup on your system. I'd recommend `nvm`.
+
+=== check out and initialize the repo
+
+First, get the repo
+
+[source, console]
+----
+gh repo clone FNNDSC/pmedquery
+----
+
+then initialize it
+
+[source, console]
+----
+cd pmedquery
+npm install
+----
+
+=== now run a query!
+
+[source, console]
+----
+cd bin
+pmedquery.mjs --query "Rudolph Pienaar" 2>/dev/null
+----
+
+and marvel at the ease!
+
+== man
+
+[source, console]
+----
+╭───────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                       │
+│                                                                                       │
+│                                                                                       │
+│   NAME                                                                                │
+│                                                                                       │
+│       pmedquery                                                                       │
+│                                                                                       │
+│   SYNOPSIS                                                                            │
+│                                                                                       │
+│       pmedquery.mjs   [--query <search>]              \                               │
+│                       [--man]                         \                               │
+│                       [--verbose <level>]             \                               │
+│                       [--json] [--bibTeX] [--term]                                    │
+│                                                                                       │
+│   DESC                                                                                │
+│                                                                                       │
+│       This simple nodejs program restores CLI sanity to performing PubMed searches.   │
+│       Rejoice!                                                                        │
+│                                                                                       │
+│   ARGS                                                                                │
+│                                                                                       │
+│       --query <search>                                                                │
+│       The search term to send to PubMed. Any PubMed query construct is valid here.    │
+│                                                                                       │
+│       --json                                                                          │
+│       If specified, output the results as a JSON object.                              │
+│                                                                                       │
+│       --bibTeX                                                                        │
+│       If specified, output the results in bibTeX format.                              │
+│                                                                                       │
+│       --term                                                                          │
+│       If specified, output the results to the console/terminal. Note if neither       │
+│       '--json' nor '--bibTex' is specified, then '--term' is assumed.                 │
+│                                                                                       │
+│       --man                                                                           │
+│       Show this man page. All other options, even if specified, are ignored.          │
+│                                                                                       │
+│       --verbose silent|normal|chatty                                                  │
+│       How much can I talk?                                                            │
+│                                                                                       │
+│                                                                                       │
+│                                                                                       │
+╰───────────────────────────────────────────────────────────────────────────────────────╯
+----
+
+== in the interest of full disclose...
+
+In the enthusiasm of releasing this WIP version (late 2023), bibTeX support is still forthcoming! Watch this space!
+
+_-30-_
