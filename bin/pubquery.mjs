@@ -42,6 +42,7 @@ function checkOn(payload) {
         console.log(pubmed.errorMessage);
         process.exit();
     }
+    return payload;
 }
 
 const CLIoptions  = yargs(hideBin(process.argv))
@@ -76,7 +77,8 @@ async function main() {
         process.exit();
     }
 
-    checkOn(await pubmed.ids_get(CLIoptions.query));
+    const idlist  = checkOn(await pubmed.ids_get(CLIoptions.query));
+    const publist = checkOn(await pubmed.ids_process(idlist.pubmedIDs))
 }
 
 main();
