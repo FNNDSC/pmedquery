@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import boxen from 'boxen';
 
 // Use a function expression to define a function named outbox
-export const outbox = function(options) {
+export const outbox = function() {
     // Assign the properties to the this object
     this.str_help = `
 
@@ -10,9 +10,9 @@ export const outbox = function(options) {
 
     `;
 
-    this.options = options;
-    this.boxenOptions = null;
-    this.error = null;
+    this.options        = null;
+    this.boxenOptions   = null;
+    this.error          = null;
 };
 
 // Use the prototype keyword to add methods to the outbox function
@@ -22,7 +22,7 @@ outbox.prototype = {
     // Use the function syntax to define the outputBox_setup method
     outputBox_setup: function() {
         this.boxenOptions = {
-            padding: 4,
+            padding: 1,
             margin: 0,
             borderStyle: "round",
             borderColor: "green",
